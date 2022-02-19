@@ -35,11 +35,11 @@ function Login() {
     });
     if( !response.status ) {
       console.log('error', response.data)
+    } else {
+      dispatch(setAccessToken(response.access_token));
+      localStorage.setItem('access_token', response.access_token);
+      navigate('/');
     }
-
-    dispatch(setAccessToken(response.access_token));
-    localStorage.setItem('access_token', response.access_token);
-    navigate('/');
   }
 
   return (
