@@ -21,21 +21,12 @@ export default function useRequest(method, url) {
 
   return {
     async send(payload) {
-      if( !payload ) {
-        payload = { query: {}, data: {} };
-      }
-  
       const response = await instance.request({
         method,
         url,
-        params: payload.query,
-        data: payload.data,
       });
 
-      return {
-        ...response.data,
-        status: response.status < 400,
-      };
+      return response;
     }
   }
 
