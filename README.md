@@ -9,8 +9,8 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { setAccessToken } from '../../store/auth';
-import useRequest from '../../api';
+import { setAccessToken } from './store/auth';
+import useRequest from './useRequest';
 
 function Login() {
 
@@ -28,16 +28,17 @@ function Login() {
   // Send request when submit button click
   async function loginHandle() {
     const response = await loginRequest.send({
+      params: { 'query-parameter-example': true },
       data: {
         email,
         password,
       }
     });
-    if( !response.status ) {
-      console.log('error', response.data)
-    } else {
-      dispatch(setAccessToken(response.access_token));
+    if( response.status === 200 ) {
+      dispatch(setAccessToken(response.data.access_token));
       navigate('/');
+    } else {
+      alert(response.data.message);
     }
   }
 
